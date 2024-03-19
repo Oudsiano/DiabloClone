@@ -45,7 +45,7 @@ namespace RPG.Saving
             CaptureState(state);
             SaveFile(saveFile,state);
         }
-
+        //отправлять на сервер этот файл
         private void SaveFile(string saveFile, object state)
         {
             string pathFromSaveFile = GetPathFromSaveFile(saveFile);

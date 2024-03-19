@@ -13,6 +13,9 @@ namespace RPG.Movement
         private NavMeshAgent thisNavAgent;
         private ActionScheduler actionScheduler;
 
+        NPCInteractable target;
+
+
         void Start()
         {
             if (!thisNavAgent)
@@ -32,6 +35,16 @@ namespace RPG.Movement
             {
                 CreateEffectAtMousePosition();
             }
+            if (target != null)
+            {
+                if ((transform.position - target.transform.position).magnitude < 1f)
+                {
+                    target.InteractWithNPC();
+                }
+            }
+
+
+            
         }
 
         public void StartMoveAction(Vector3 pos)
@@ -87,7 +100,19 @@ namespace RPG.Movement
             if (Physics.Raycast(ray, out hit))
             {
                 CreateEffect(hit.point + new Vector3(0, 0.1f, 0));
+
+                if (hit.transform.CompareTag("Interactable"))
+                {
+                    target = hit.transform.GetComponent<NPCInteractable>();
+
+                }
+                else
+                {
+                    target = null;
+                }
             }
+            
+
         }
 
         // Метод для создания эффекта в указанной позиции
